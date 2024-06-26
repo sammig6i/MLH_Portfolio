@@ -6,8 +6,11 @@ load_dotenv()
 app = Flask(__name__)
 
 
-@app.route('/')
-def index():
-    return render_template('index.html', title="Hi, I'm Sammi 👋", url=os.getenv("URL"))
 
 @app.route('/')
+def index():
+    return render_template('about.html', title="Hi, I'm Sammi 👋", url=os.getenv("URL"))
+
+@app.route('/experience')
+def experience():
+    return render_template('experience.html', title="My Experience", url=os.getenv("URL"))
