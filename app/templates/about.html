@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block title %} About {% endblock %} {% block
+content %}
+<!-- About Section -->
+<div class="about-container">
+  <div class="profile-picture">
+    <img
+      src="{{ url_for('static', filename='img/profile.png') }}"
+      alt="Profile Picture"
+    />
+  </div>
+  <div class="about-content">
+    <h2 class="about-heading">About Me</h2>
+    <p>
+      <span class="initial-letter">I</span> am an upcoming senior CS student at
+      WGU, set to graduate in June 2025, and currently working as a DevOps
+      Fellow with MLH x Meta. With a background in accounting, I've transitioned
+      into the tech industry to pursue my passion for technology. I aim to
+      leverage my diverse experiences to make a global impact in technology. In
+      my free time, you'll see me cooking, making music, playing basketball, or
+      hiking and reading.
+    </p>
+  </div>
+</div>
+
+<!-- Map section -->
+<div class="text-content">
+  <h2>Places I've Been</h2>
+</div>
+<div class="map-container">
+  <div class="map-frame">
+    <div id="map-id"></div>
+  </div>
+</div>
+
+{% endblock %}
