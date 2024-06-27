@@ -6,56 +6,24 @@ content %}
 />
 <div class="hobbies-page">
   <div class="hobby-section">
+    {% for hobby in hobbies %}
     <div class="hobby">
       <div class="hobby-image">
-        <img
-          src="{{ url_for('static', filename='img/basketball.jpg') }}"
-          alt="Hobby Image"
-        />
+        <img src="{{ hobby.image }}" alt="{{ hobby.title }}" />
       </div>
       <div class="hobby-content">
-        <h2 class="hobby-title">Basketball</h2>
+        <h2 class="hobby-title">{{ hobby.title }}</h2>
+        <p class="hobby-text">{{ hobby.description }}</p>
+        {% if hobby.link %}
+        <p>
+          <a href="{{ hobby.link }}" target="_blank"
+            >Youtube</a
+          >
+        </p>
+        {% endif %}
       </div>
     </div>
-  </div>
-  <div class="hobby-section">
-    <div class="hobby">
-      <div class="hobby-image">
-        <img
-          src="{{ url_for('static', filename='img/cooking.jpg') }}"
-          alt="Hobby Image"
-        />
-      </div>
-      <div class="hobby-content">
-        <h2 class="hobby-title">Cooking</h2>
-      </div>
-    </div>
-  </div>
-  <div class="hobby-section">
-    <div class="hobby">
-      <div class="hobby-image">
-        <img
-          src="{{ url_for('static', filename='img/music.jpg') }}"
-          alt="Hobby Image"
-        />
-      </div>
-      <div class="hobby-content">
-        <h2 class="hobby-title">Music</h2>
-      </div>
-    </div>
-  </div>
-  <div class="hobby-section">
-    <div class="hobby">
-      <div class="hobby-image">
-        <img
-          src="{{ url_for('static', filename='img/hiking.jpg') }}"
-          alt="Hobby Image"
-        />
-      </div>
-      <div class="hobby-content">
-        <h2 class="hobby-title">Hiking</h2>
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}
