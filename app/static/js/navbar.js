@@ -21,3 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 });
+
+
+const menuToggle = document.getElementById('mobile-menu');
+const dropdownMenu = document.getElementById('dropdown-menu');
+
+menuToggle.addEventListener('click', () => {
+  dropdownMenu.classList.toggle('active');
+});
+
+  
+  

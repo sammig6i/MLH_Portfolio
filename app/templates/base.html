@@ -42,10 +42,10 @@
   <body>
     <!-- Navigation bar -->
     <nav class="navbar">
+      <div class="brand">
+        <a href="{{ url_for('index') }}">Sammi Ghazzawi</a>
+      </div>
       <ul class="nav-list">
-        <li class="nav-item brand">
-          <a href="{{ url_for('index') }}" >Sammi Ghazzawi</a>
-        </li>
         <li class="nav-item">
           <a href="{{ url_for('index') }}" class="nav-link">About</a>
         </li>
@@ -56,7 +56,18 @@
           <a href="{{ url_for('hobbies') }}" class="nav-link">Hobbies</a>
         </li>
       </ul>
+      <div class="menu-toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
     </nav>
+
+    <div class="dropdown-menu" id="dropdown-menu">
+      <a href="{{ url_for('index') }}" class="dropdown-link">About</a>
+      <a href="{{ url_for('experience') }}" class="dropdown-link">Experience</a>
+      <a href="{{ url_for('hobbies') }}" class="dropdown-link">Hobbies</a>
+    </div>
 
     {% block content %}{% endblock %}
 
