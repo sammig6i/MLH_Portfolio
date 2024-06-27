@@ -7,13 +7,8 @@
 .hobby-section {
   width: 100%;
   max-width: 1200px;
-  padding: 90px;
-}
-
-.hobby-section {
-  width: 100%;
-  max-width: 1200px;
-  padding: 5vw;
+  padding: 2vw;
+  margin: auto;
 }
 
 .hobby {
@@ -24,7 +19,8 @@
 
 .hobby-image {
   flex: 1;
-  max-width: 30%;
+  max-width: 35%;
+  width: 20vw;
 }
 
 .hobby-image img {
