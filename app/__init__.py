@@ -14,3 +14,8 @@ def index():
 @app.route('/experience')
 def experience():
     return render_template('experience.html', title="My Experience", url=os.getenv("URL"))
+
+
+@app.route('/hobbies')
+def hobbies():
+    return render_template('hobbies.html', title="My Hobbies", url=os.getenv("URL"))

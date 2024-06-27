@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block title %} Hobbies {% endblock %} {% block
+content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/hobbies.css') }}"
+/>
+<div class="hobbies-page">
+  <div class="hobby-section">
+    <div class="hobby">
+      <div class="hobby-image">
+        <img
+          src="{{ url_for('static', filename='img/basketball.jpg') }}"
+          alt="Hobby Image"
+        />
+      </div>
+      <div class="hobby-content">
+        <h2 class="hobby-title">Basketball</h2>
+      </div>
+    </div>
+  </div>
+  <div class="hobby-section">
+    <div class="hobby">
+      <div class="hobby-image">
+        <img
+          src="{{ url_for('static', filename='img/cooking.jpg') }}"
+          alt="Hobby Image"
+        />
+      </div>
+      <div class="hobby-content">
+        <h2 class="hobby-title">Cooking</h2>
+      </div>
+    </div>
+  </div>
+  <div class="hobby-section">
+    <div class="hobby">
+      <div class="hobby-image">
+        <img
+          src="{{ url_for('static', filename='img/music.jpg') }}"
+          alt="Hobby Image"
+        />
+      </div>
+      <div class="hobby-content">
+        <h2 class="hobby-title">Music</h2>
+      </div>
+    </div>
+  </div>
+  <div class="hobby-section">
+    <div class="hobby">
+      <div class="hobby-image">
+        <img
+          src="{{ url_for('static', filename='img/hiking.jpg') }}"
+          alt="Hobby Image"
+        />
+      </div>
+      <div class="hobby-content">
+        <h2 class="hobby-title">Hiking</h2>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
