@@ -13,7 +13,7 @@ mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
 user=os.getenv("MYSQL_USER"),
 password=os.getenv("MYSQL_PASSWORD"),
 host=os.getenv("MYSQL_HOST"),
-port=5000)
+port=int(os.getenv("MYSQL_PORT", 3306)))
 
 
 class TimeLinePost(Model):
