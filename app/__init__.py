@@ -1,6 +1,7 @@
 from crypt import methods
+import logging
 import os
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, render_template, request
 from dotenv import load_dotenv
 from peewee import *
 import datetime
@@ -9,6 +10,9 @@ from playhouse.shortcuts import model_to_dict
 load_dotenv()
 app = Flask(__name__)
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
 user=os.getenv("MYSQL_USER"),
 password=os.getenv("MYSQL_PASSWORD"),
@@ -16,17 +20,23 @@ host=os.getenv("MYSQL_HOST"),
 port=int(os.getenv("MYSQL_PORT", 3306)))
 
 
-# class TimeLinePost(Model):
-#     name = CharField()
-#     email = CharField()
-#     content = TextField()
-#     created_at = DateTimeField(default=datetime.datetime.now)
+class TimeLinePost(Model):
+    name = CharField()
+    email = CharField()
+    content = TextField()
+    created_at = DateTimeField(default=datetime.datetime.now)
 
-#     class Meta:
-#         database = mydb
+    class Meta:
+        database = mydb
 
-# mydb.connect()
-# mydb.create_tables([TimeLinePost])
+try:
+    mydb.connect()
+    logger.info("Successfully connected to database.")
+    mydb.create_tables([TimeLinePost])
+    logger.info("Tab;es created successfully")
+except Exception as e:
+    logger.error("Error connecting to the database: s%", e)
+    raise e
 
 
 @app.route('/')
@@ -96,6 +106,19 @@ def get_time_line_post():
         ]
     }
 
+
+@app.route('/api/timeline_post/<int:id>', methods=['DELETE'])
+def delete_timeline_post(id):
+    try:
+        timeline_post = TimeLinePost.get_by_id(id)
+        timeline_post.delete_instance()
+        return jsonify({"success": "Post deleted successfully"})
+    except TimeLinePost.DoesNotExist:
+        return jsonify({"error": "Post not found", "id": id}), 404
+
+
+
+    
 
 
     
