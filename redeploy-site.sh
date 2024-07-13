@@ -6,7 +6,7 @@ cd /root/MLH_Portfolio
 
 git fetch && git reset origin/main --hard
 
-source /root/MLH_Portfolio/python3-virtualenv/bin/activate
+source python3-virtualenv/bin/activate
 
 pip install -r requirements.txt
 
