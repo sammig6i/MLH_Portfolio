@@ -16,17 +16,17 @@ host=os.getenv("MYSQL_HOST"),
 port=int(os.getenv("MYSQL_PORT", 3306)))
 
 
-class TimeLinePost(Model):
-    name = CharField()
-    email = CharField()
-    content = TextField()
-    created_at = DateTimeField(default=datetime.datetime.now)
+# class TimeLinePost(Model):
+#     name = CharField()
+#     email = CharField()
+#     content = TextField()
+#     created_at = DateTimeField(default=datetime.datetime.now)
 
-    class Meta:
-        database = mydb
+#     class Meta:
+#         database = mydb
 
-mydb.connect()
-mydb.create_tables([TimeLinePost])
+# mydb.connect()
+# mydb.create_tables([TimeLinePost])
 
 
 @app.route('/')
