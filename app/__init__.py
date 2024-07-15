@@ -1,7 +1,8 @@
-from crypt import methods
 import logging
 import os
-from flask import Flask, jsonify, render_template, request
+import requests
+import hashlib
+from flask import Flask, jsonify, redirect, render_template, request, url_for
 from dotenv import load_dotenv
 from peewee import *
 import datetime
@@ -117,6 +118,44 @@ def delete_timeline_post(id):
         return jsonify({"error": "Post not found", "id": id}), 404
 
 
+GRAVATAR_BASE_URL = "https://www.gravatar.com/avatar/"
+GRAVATAR_API_KEY = os.getenv('GRAVATAR_API_KEY')
+
+
+def get_gravatar_profile(email, default_avatar_url):
+    email_hash = hashlib.md5(email.lower().encode('utf-8')).hexdigest()
+    gravatar_url = f"{GRAVATAR_BASE_URL}{email_hash}?d=404" 
+
+    response = requests.get(gravatar_url)
+    if response.status_code == 200:
+        return gravatar_url
+    else:
+        return default_avatar_url
+
+@app.route('/timeline', methods=['GET', 'POST'])
+def timeline():
+    default_avatar_url = url_for('static', filename='img/default-profile.jpg', _external=True)
+    user_avatar = None
+    if request.method == 'POST':
+        response = requests.post(
+            url_for('post_time_line_post', _external=True),
+            data={
+                'name': request.form['name'],
+                'email': request.form['email'],
+                'content': request.form['content']
+            }
+        )
+        if response.status_code == 200:
+            return redirect(url_for('timeline'))
+        user_avatar = get_gravatar_profile(request.form['email'], default_avatar_url)
+        
+    response = requests.get(url_for('get_time_line_post', _external=True))
+    posts = response.json().get('timeline posts', [])
+
+    for post in posts:
+        post['avatar_url'] = get_gravatar_profile(post['email'], default_avatar_url)
+
+    return render_template('timeline.html', title="Timeline", posts=posts, user_avatar=user_avatar)
 
     
 
