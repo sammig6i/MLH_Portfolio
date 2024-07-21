@@ -34,7 +34,7 @@ try:
     mydb.connect()
     logger.info("Successfully connected to database.")
     mydb.create_tables([TimeLinePost])
-    logger.info("Tab;es created successfully")
+    logger.info("Tables created successfully")
 except Exception as e:
     logger.error("Error connecting to the database: s%", e)
     raise e
@@ -100,7 +100,7 @@ def post_time_line_post():
 @app.route('/api/timeline_post', methods=['GET'])
 def get_time_line_post():
     return {
-        'timeline posts': [
+        'timeline_posts': [
             model_to_dict(p)
             for p in
             TimeLinePost.select().order_by(TimeLinePost.created_at.desc())
