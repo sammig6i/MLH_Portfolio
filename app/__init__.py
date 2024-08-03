@@ -150,7 +150,7 @@ def timeline():
         user_avatar = get_gravatar_profile(request.form['email'], default_avatar_url)
         
     response = requests.get(url_for('get_time_line_post', _external=True))
-    posts = response.json().get('timeline posts', [])
+    posts = response.json().get('timeline_posts', [])
 
     for post in posts:
         post['avatar_url'] = get_gravatar_profile(post['email'], default_avatar_url)
