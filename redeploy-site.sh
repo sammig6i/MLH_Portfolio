@@ -1,11 +1,9 @@
 #!/bin/bash
 
-cd /root/MLH_Portfolio 
+cd /root/MLH_Portfolio
 
 git fetch && git reset origin/main --hard
 
-source python3-virtualenv/bin/activate
+docker compose -f docker-compose.prod.yml down
 
-pip install -r requirements.txt
-
-sudo systemctl restart myportfolio
+docker compose -f docker-compose.prod.yml up -d --build

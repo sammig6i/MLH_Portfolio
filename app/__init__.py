@@ -51,7 +51,7 @@ def index():
         Education("Western Governor's Uni", "Computer Science", "../static/img/wgu.png"),
         Education("Boise State University", "Accounting, Minor in IT", "../static/img/bsu.jpeg")
     ]
-    return render_template('about.html', title="Hi, I'm Sammi 👋", url=os.getenv("URL"), education=education)
+    return render_template('about.html', title="H, I'm Sammi 👋", url=os.getenv("URL"), education=education)
 
 @app.route('/experience')
 def experience():
@@ -87,25 +87,6 @@ def hobbies():
     return render_template('hobbies.html', title="My Hobbies", url=os.getenv("URL"), hobbies=hobbies)
 
 
-@app.route('/api/timeline_post', methods=['POST'])
-def post_time_line_post():
-    name = request.form['name']
-    email = request.form['email']
-    content = request.form['content']
-    timeline_post = TimelinePost.create(name=name, email=email, content=content)
-
-    return model_to_dict(timeline_post)
-
-
-@app.route('/api/timeline_post', methods=['GET'])
-def get_time_line_post():
-    return {
-        'timeline_posts': [
-            model_to_dict(p)
-            for p in
-            TimelinePost.select().order_by(TimelinePost.created_at.desc())
-        ]
-    }
 
 
 @app.route('/api/timeline_post/<int:id>', methods=['DELETE'])
@@ -131,6 +112,26 @@ def get_gravatar_profile(email, default_avatar_url):
         return gravatar_url
     else:
         return default_avatar_url
+    
+@app.route('/api/timeline_post', methods=['POST'])
+def post_time_line_post():
+    name = request.form['name']
+    email = request.form['email']
+    content = request.form['content']
+    timeline_post = TimelinePost.create(name=name, email=email, content=content)
+
+    return model_to_dict(timeline_post)
+
+
+@app.route('/api/timeline_post', methods=['GET'])
+def get_time_line_post():
+    return {
+        'timeline_posts': [
+            model_to_dict(p)
+            for p in
+            TimelinePost.select().order_by(TimelinePost.created_at.desc())
+        ]
+    }
 
 @app.route('/timeline', methods=['GET', 'POST'])
 def timeline():
