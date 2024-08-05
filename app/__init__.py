@@ -14,11 +14,19 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
-user=os.getenv("MYSQL_USER"),
-password=os.getenv("MYSQL_PASSWORD"),
-host=os.getenv("MYSQL_HOST"),
-port=int(os.getenv("MYSQL_PORT", 3306)))
+TESTING = os.getenv("TESTING")
+
+if TESTING:
+    mydb = SqliteDatabase('test_database.sqlite')
+else:
+    # Use MySQL for production
+    mydb = MySQLDatabase(
+        os.getenv("MYSQL_DATABASE"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        host=os.getenv("MYSQL_HOST"),
+        port=int(os.getenv("MYSQL_PORT", 3306))
+    )
 
 
 class TimelinePost(Model):
