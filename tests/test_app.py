@@ -17,7 +17,7 @@ class AppTestCase(unittest.TestCase):
         assert response.status_code == 200
         html = response.get_data(as_text=True)
         # assert "<title>MLH Fellow</title>" in html
-        assert "Hi, I'm Sammi 👋" in html
+        assert "About Me" in html
         assert "Western Governor's Uni" in html
         assert "Boise State University" in html
         # Check for image logos
