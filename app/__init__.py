@@ -51,7 +51,7 @@ def index():
         Education("Western Governor's Uni", "Computer Science", "../static/img/wgu.png"),
         Education("Boise State University", "Accounting, Minor in IT", "../static/img/bsu.jpeg")
     ]
-    return render_template('about.html', title="H, I'm Sammi 👋", url=os.getenv("URL"), education=education)
+    return render_template('about.html', title="Hi, I'm Sammi 👋", url=os.getenv("URL"), education=education)
 
 @app.route('/experience')
 def experience():
