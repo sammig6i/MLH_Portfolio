@@ -16,7 +16,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-os.environ["TESTING"] = 'true'
+# os.environ["TESTING"] = 'true'
 TESTING = os.getenv("TESTING")
 
 if TESTING:
