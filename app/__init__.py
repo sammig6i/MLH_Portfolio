@@ -1,5 +1,7 @@
+import json
 import logging
 import os
+import re
 import requests
 import hashlib
 from flask import Flask, jsonify, redirect, render_template, request, url_for
@@ -14,10 +16,11 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+os.environ["TESTING"] = 'true'
 TESTING = os.getenv("TESTING")
 
 if TESTING:
-    mydb = SqliteDatabase('test_database.sqlite')
+    mydb = SqliteDatabase(':memory:')
 else:
     # Use MySQL for production
     mydb = MySQLDatabase(
@@ -56,7 +59,7 @@ def index():
             self.degree = degree
             self.logo = logo
     education = [
-        Education("Western Governor's Uni", "Computer Science", "../static/img/wgu.png"),
+        Education("Western Governors Uni", "Computer Science", "../static/img/wgu.png"),
         Education("Boise State University", "Accounting, Minor in IT", "../static/img/bsu.jpeg")
     ]
     return render_template('about.html', title="Hi, I'm Sammi 👋", url=os.getenv("URL"), education=education)
@@ -95,18 +98,6 @@ def hobbies():
     return render_template('hobbies.html', title="My Hobbies", url=os.getenv("URL"), hobbies=hobbies)
 
 
-
-
-@app.route('/api/timeline_post/<int:id>', methods=['DELETE'])
-def delete_timeline_post(id):
-    try:
-        timeline_post = TimelinePost.get_by_id(id)
-        timeline_post.delete_instance()
-        return jsonify({"success": "Post deleted successfully"})
-    except TimelinePost.DoesNotExist:
-        return jsonify({"error": "Post not found", "id": id}), 404
-
-
 GRAVATAR_BASE_URL = "https://www.gravatar.com/avatar/"
 GRAVATAR_API_KEY = os.getenv('GRAVATAR_API_KEY')
 
@@ -121,14 +112,34 @@ def get_gravatar_profile(email, default_avatar_url):
     else:
         return default_avatar_url
     
+
+@app.route('/api/timeline_post/<int:id>', methods=['DELETE'])
+def delete_timeline_post(id):
+    try:
+        timeline_post = TimelinePost.get_by_id(id)
+        timeline_post.delete_instance()
+        return jsonify({"success": "Post deleted successfully"})
+    except TimelinePost.DoesNotExist:
+        return jsonify({"error": "Post not found", "id": id}), 404
+    
 @app.route('/api/timeline_post', methods=['POST'])
 def post_time_line_post():
-    name = request.form['name']
-    email = request.form['email']
-    content = request.form['content']
+    name = request.form.get('name')
+    email = request.form.get('email')
+    content = request.form.get('content')
+
+    if not name:
+        return jsonify({"error": "Invalid name"}), 400
+    
+    if not email or not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+        return jsonify({"error": "Invalid email"}), 400
+    
+    if not content:
+        return jsonify({"error": "Invalid content"}), 400
+
     timeline_post = TimelinePost.create(name=name, email=email, content=content)
 
-    return model_to_dict(timeline_post)
+    return jsonify(model_to_dict(timeline_post)), 201
 
 
 @app.route('/api/timeline_post', methods=['GET'])

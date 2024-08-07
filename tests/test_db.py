@@ -1,6 +1,6 @@
 import unittest
-
 from app import TimelinePost
+from app import app
 from peewee import *
 
 MODELS = [TimelinePost]
@@ -14,9 +14,9 @@ class TestTimelinePost(unittest.TestCase):
         # Bind model classes to test db. Since we have a complete list of
         # all models, we do not need to recursively bind dependencies.
         test_db.bind(MODELS, bind_refs=False, bind_backrefs=False)
-
         test_db.connect()
         test_db.create_tables(MODELS)
+        self.client = app.test_client()
 
     def tearDown(self):
         # Not strictly necessary since SQLite in-memory databases only live

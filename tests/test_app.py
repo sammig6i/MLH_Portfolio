@@ -1,10 +1,6 @@
 # tests/test_app.py
-
 import os
 import unittest
-
-os.environ["TESTING"] = "true"
-
 from app import app
 
 
@@ -17,7 +13,8 @@ class AppTestCase(unittest.TestCase):
         assert response.status_code == 200
         html = response.get_data(as_text=True)
         # assert "<title>MLH Fellow</title>" in html
-        assert "Western Governor's Uni" in html
+        assert "About Me" in html
+        assert "Western Governors Uni" in html
         assert "Boise State University" in html
         # Check for image logos
         assert "../static/img/wgu.png" in html
